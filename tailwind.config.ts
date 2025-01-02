@@ -11,6 +11,7 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        accent: "rgba(134, 255, 110, 0.8)",
       },
     },
   },

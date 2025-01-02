@@ -7,14 +7,14 @@ import {
 } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
-
+import defaultAvatar from "../../public/ORANGE_BG.png";
 export default function Aside() {
   return (
     <aside className="sticky w-fit top-0 flex flex-col items-center backdrop-blur gap-[16px] py-[10px] px-[4px]">
       <Image
-        src=""
+        src={defaultAvatar}
         alt=""
-        className="w-[90px] h-[90px] rounded-full bg-gray-300 animate-pulse"
+        className="w-[90px] h-[90px] rounded-full bg-gray-300 aspect-square object-cover object-center"
         slot="fallback"
       />
       <ul className="flex flex-row-reverse justify-center md:justify-self-start w-full md:flex-col">

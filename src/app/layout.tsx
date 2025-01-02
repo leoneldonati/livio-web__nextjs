@@ -21,9 +21,9 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body
-        className={`${lexendFont.variable} antialiased min-h-screen overflow-auto flex flex-row`}
+        className={`${lexendFont.variable} antialiased min-h-screen overflow-auto flex flex-row max-w-[800px] mx-auto`}
       >
-        <main className="bg-red-400 max-w-[530px] mx-auto">{children}</main>
+        <main className=" max-w-[530px] mx-auto">{children}</main>
 
         <Aside />
       </body>
