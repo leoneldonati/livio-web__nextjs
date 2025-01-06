@@ -29,3 +29,11 @@ export async function getSession() {
     userId: decrypted.signedUserId as string,
   };
 }
+
+export async function closeSession() {
+  const cookieStore = await cookies();
+  const cookieName = "session";
+  cookieStore.delete(cookieName);
+
+  return true;
+}

@@ -19,6 +19,12 @@ export async function getPostsByUserId(userId: string) {
   return posts as unknown as Post[];
 }
 
+export async function getPostsCount() {
+  const posts = await postModel.find().toArray();
+
+  return posts.length;
+}
+
 export async function giveLike(from: string, to: string) {
   const updatedPost = await postModel.findOneAndUpdate(
     { _id: new ObjectId(to) },

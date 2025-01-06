@@ -4,7 +4,7 @@
 import { userModel } from "@/db";
 import { compareHash } from "@/libs/bcrypt";
 import { encrypt } from "@/libs/jose";
-import { createSession } from "@/utils/session";
+import { closeSession, createSession } from "@/utils/session";
 import { validate } from "@/utils/zod";
 import { z } from "zod";
 
@@ -71,4 +71,8 @@ export async function login(prevState: any, payload: FormData) {
       otherIssues: null,
     };
   }
+}
+
+export async function logout() {
+  if (await closeSession()) return true;
 }

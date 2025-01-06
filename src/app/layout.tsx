@@ -6,6 +6,7 @@ import Aside from "@/components/aside";
 const lexendFont = Lexend({
   variable: "--font-lexend",
   weight: "400",
+  subsets: ["latin"],
 });
 export const metadata: Metadata = {
   title: "Livio",

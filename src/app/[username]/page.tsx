@@ -1,4 +1,6 @@
+import { getPostsByUserId } from "@/actions/post";
 import { getUserByUsername } from "@/actions/user";
+import ProfileHeaderInfo from "@/components/ui/profile-header-info";
 import UserPostsFeed from "@/components/user-posts-feed";
 import { getSession } from "@/utils/session";
 import { format } from "@formkit/tempo";
@@ -20,14 +22,14 @@ export default async function ProfilePage({
   if (!session || !user) return;
 
   const isAdmin = user?._id.toString() === session.userId;
+
   return (
-    <section className="min-h-screen relative w-full max-w-[500px] mx-auto flex flex-col pt-[48px]">
-      <header className="absolute top-0 z-30 w-full flex flex-row items-center px-[13px] py-[6px] bg-white">
-        {/* <BackBtn /> */}
-        <div className="flex flex-col ml-6">
-          <strong>{user?.name}</strong>
-        </div>
-      </header>
+    <section className="min-h-screen relative w-full max-w-[500px] mx-auto flex flex-col">
+      <ProfileHeaderInfo
+        name={user?.name}
+        postsCount={(await getPostsByUserId(user._id.toString())).length}
+        avatar={user?.avatar}
+      />
 
       {user?.headerPhoto && (
         <Image
@@ -84,7 +86,7 @@ export default async function ProfilePage({
           </span>
         </div>
 
-        <div className="flex flex-row items-center justify-center gap-2 [&>span]:flex [&>span]:flex-row [&>span]:gap-1 [&>span]:items-center [&>span]:text-black/60">
+        <div className="flex flex-row items-center mt-4 justify-center gap-2 [&>span]:flex [&>span]:flex-row [&>span]:gap-1 [&>span]:items-center [&>span]:text-black/60">
           <span>
             <strong className="text-black">{user?.followed?.length}</strong>
             Siguiendo
