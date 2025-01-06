@@ -10,9 +10,12 @@ import { getSession } from "@/utils/session";
 import { Suspense } from "react";
 import Avatar from "./avatar";
 import AvatarSkelleton from "./skelletons/avatar";
+import { getUserBy } from "@/actions/user";
 export default async function Aside() {
   const session = await getSession();
   if (!session) return;
+
+  const { user } = await getUserBy(session.userId);
   return (
     <aside
       className={`sticky w-fit top-0 flex flex-col items-center backdrop-blur gap-[16px] py-[10px] px-[4px] ${
@@ -20,13 +23,13 @@ export default async function Aside() {
       }`}
     >
       <Suspense fallback={<AvatarSkelleton />}>
-        <Avatar id={session.signedUserId as string} />
+        <Avatar id={session.userId} />
       </Suspense>
       <ul className="flex flex-row-reverse justify-center md:justify-self-start w-full md:flex-col">
         <li>
           <Link
             href="/search"
-            className="px-5 py-3 rounded-lg transition-colors hover:bg-[rgba(134,290,110,.8)] flex items-center gap-1"
+            className="px-5 py-3 rounded-lg transition-colors hover:bg-accent flex items-center gap-1"
           >
             <IconUserSearch />
             <span className="hidden md:block">Buscar</span>
@@ -35,7 +38,7 @@ export default async function Aside() {
         <li>
           <Link
             href="/admin/notifications"
-            className="px-5 py-3 rounded-lg transition-colors hover:bg-[rgba(134,290,110,.8)] flex items-center gap-1"
+            className="px-5 py-3 rounded-lg transition-colors hover:bg-accent flex items-center gap-1"
           >
             <IconBellRinging2 />
             <span className="hidden md:block">Notificaciones</span>
@@ -43,8 +46,8 @@ export default async function Aside() {
         </li>
         <li>
           <Link
-            href="/profile"
-            className="px-5 py-3 rounded-lg transition-colors hover:bg-[rgba(134,290,110,.8)] flex items-center gap-1"
+            href={`/${user?.username}`}
+            className="px-5 py-3 rounded-lg transition-colors hover:bg-accent flex items-center gap-1"
           >
             <IconUser />
             <span className="hidden md:block">Perfil</span>
@@ -52,8 +55,8 @@ export default async function Aside() {
         </li>
         <li>
           <Link
-            href="/"
-            className="px-5 py-3 rounded-lg transition-colors hover:bg-[rgba(134,290,110,.8)] flex items-center gap-1"
+            href="/feed"
+            className="px-5 py-3 rounded-lg transition-colors hover:bg-accent flex items-center gap-1"
           >
             <IconHome2 />
             <span className="hidden md:block">Inicio</span>
@@ -64,7 +67,7 @@ export default async function Aside() {
       <div>
         <Link
           href="/logout"
-          className="px-5 py-3 rounded-lg transition-colors hover:bg-[rgba(134,290,110,.8)] flex flex-row items-center gap-1"
+          className="px-5 py-3 rounded-lg transition-colors hover:bg-red-500 hover:text-white flex flex-row items-center gap-1"
         >
           <IconLogout /> Cerrar sesión
         </Link>

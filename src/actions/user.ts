@@ -17,3 +17,18 @@ export async function getUserBy(id: string) {
     user,
   };
 }
+
+export async function getUserByUsername(username: string) {
+  const user = await userModel.findOne({ username });
+
+  if (!user)
+    return {
+      ok: false,
+      user: null,
+    };
+
+  return {
+    ok: true,
+    user,
+  };
+}

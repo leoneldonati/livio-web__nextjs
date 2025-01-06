@@ -7,3 +7,4 @@ const client = new MongoClient(url, { retryWrites: true, appName: "Cluster0" });
 await client.connect();
 
 export const userModel = client.db(process.env.DB_NAME).collection("users");
+export const postModel = client.db(process.env.DB_NAME).collection("posts");

@@ -25,5 +25,7 @@ export async function getSession() {
 
   if (!decrypted) return false;
 
-  return decrypted;
+  return {
+    userId: decrypted.signedUserId as string,
+  };
 }
