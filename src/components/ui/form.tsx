@@ -1,37 +1,35 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { login } from "@/actions/login";
+import { login } from "@/actions/auth";
+import { IconLoader3, IconTrashFilled } from "@tabler/icons-react";
 import Form from "next/form";
-import { useActionState } from "react";
+import { useRouter } from "next/navigation";
+import { useActionState, useEffect, useState } from "react";
 
-const StatusCard = ({
-  state,
-}: {
-  state: {
-    ok: boolean;
-    message: string;
-    status: number;
-    otherIssues: any;
-  };
-}) => {
-  return (
-    <article className="max-w-[340px]  bg-red-400 border-2 border-red-500 p-5 rounded-md text-white flex flex-col items-center">
-      <span className="text-4xl font-bold">{state.status}</span>
-
-      <strong>Oops, parece que pasó algo..</strong>
-
-      <p>{state.message}</p>
-    </article>
-  );
-};
 export default function ClientForm() {
-  const [state, formAction, pending] = useActionState(login, {
+  const initialState = {
     ok: true,
     message: "",
     otherIssues: null,
-    status: 200,
-  });
+    status: 102,
+  };
+  const [state, formAction, pending] = useActionState(login, initialState);
+  const [hasError, setHasError] = useState(false);
+  const router = useRouter();
+  useEffect(() => {
+    if (state.status === 200 && !hasError) {
+      return router.push("/feed");
+    }
+
+    if (state.status >= 400) {
+      setHasError(true);
+      const timer = setTimeout(() => {
+        setHasError(false);
+      }, 4000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [state]);
   return (
     <Form
       action={formAction}
@@ -47,7 +45,7 @@ export default function ClientForm() {
           autoFocus
           autoComplete="email"
           required
-          className={`p-3 border-2 rounded-md ${!state.ok && "border-red-500"}`}
+          className={`p-3 border-2 rounded-md ${hasError && "border-red-500"}`}
         />
       </label>
 
@@ -58,24 +56,41 @@ export default function ClientForm() {
           name="password"
           id="password"
           required
-          className={`p-3 border-2 rounded-md ${!state.ok && "border-red-500"}`}
+          className={`p-3 border-2 rounded-md ${hasError && "border-red-500"}`}
         />
       </label>
 
       <button
         type="submit"
-        className="py-4 px-8 bg-accent rounded-md transition-transform hover:scale-95"
+        className="py-4 px-8 bg-accent rounded-md transition-transform hover:scale-95 flex flex-row items-center justify-center gap-2"
       >
-        {pending ? "Iniciando sesión" : "Inicia sesión con Email"}
+        <span>{pending ? "Iniciando sesión" : "Inicia sesión con Email"}</span>
+        {pending && <IconLoader3 className="animate-spin" />}
       </button>
 
+      {/* STATUS CARD */}
       <div
-        className={`w-full flex justify-center absolute -bottom-1/2 left-0 transition ${
-          state.ok && "-translate-y-full"
-        } ${state.ok && "opacity-0"} ${state.ok && "pointer-events-none"}`}
+        className={`w-full flex justify-center fixed bottom-[10%] z-30 left-0 transition ${
+          !hasError && "-translate-y-full"
+        } ${!hasError && "opacity-0"} ${!hasError && "pointer-events-none"}`}
       >
-        <StatusCard state={state} />
+        <article className="max-w-[340px]  bg-red-400 border-2 border-red-500 p-5 rounded-md text-white flex flex-col gap-2 items-center relative">
+          <span className="text-4xl font-bold">{state.status}</span>
+
+          <strong>Oops, parece que pasó algo..</strong>
+
+          <p>{state.message}</p>
+
+          <button
+            type="button"
+            className="text-white absolute top-3 right-3  transition-transform hover:scale-105 active:scale-100"
+            onClick={() => setHasError(false)}
+          >
+            <IconTrashFilled />
+          </button>
+        </article>
       </div>
+      {/* STATUS CARD */}
     </Form>
   );
 }

@@ -1,3 +1,4 @@
+import { decrypt } from "@/libs/jose";
 import { cookies } from "next/headers";
 import "server-only";
 export async function createSession(token: string) {
@@ -11,4 +12,18 @@ export async function createSession(token: string) {
     sameSite: "lax",
     path: "/",
   });
+}
+
+export async function getSession() {
+  const cookieStore = await cookies();
+  const cookieName = "session";
+  const session = cookieStore.get(cookieName);
+
+  if (!session) return false;
+
+  const decrypted = await decrypt(session.value);
+
+  if (!decrypted) return false;
+
+  return decrypted;
 }

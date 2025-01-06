@@ -6,7 +6,6 @@ import { compareHash } from "@/libs/bcrypt";
 import { encrypt } from "@/libs/jose";
 import { createSession } from "@/utils/session";
 import { validate } from "@/utils/zod";
-import { redirect } from "next/navigation";
 import { z } from "zod";
 
 const loginContract = z.object({
@@ -57,7 +56,12 @@ export async function login(prevState: any, payload: FormData) {
 
     await createSession(signedToken);
 
-    return redirect("/feed");
+    return {
+      ok: true,
+      message: "¡Inicio de sesión exitoso!",
+      status: 200,
+      otherIssues: null,
+    };
   } catch (e) {
     console.error(e);
     return {

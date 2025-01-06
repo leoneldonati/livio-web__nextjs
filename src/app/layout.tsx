@@ -23,7 +23,7 @@ export default function RootLayout({
       <body
         className={`${lexendFont.variable} antialiased min-h-screen overflow-auto flex flex-row max-w-[800px] mx-auto`}
       >
-        <main className=" max-w-[530px] mx-auto">{children}</main>
+        <main className=" max-w-[530px] w-full mx-auto">{children}</main>
 
         <Aside />
       </body>
