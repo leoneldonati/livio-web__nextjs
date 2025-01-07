@@ -1,9 +1,8 @@
 import { getPosts } from "@/actions/post";
 import PostCard from "@/components/post-card";
-import type { Post } from "@/definitions";
 
 export default async function Feed() {
-  const posts: Post[] = [];
+  const posts = await getPosts();
   return (
     <section>
       {posts.map((post) => (
