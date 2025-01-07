@@ -1,12 +1,13 @@
 import { getPostsByUserId } from "@/actions/post";
 import { getUserByUsername } from "@/actions/user";
+import ProfileEditBtn from "@/components/profile-edit-btn";
 import ProfileHeaderInfo from "@/components/ui/profile-header-info";
 import UserPostsFeed from "@/components/user-posts-feed";
 import { getSession } from "@/utils/session";
 import { format } from "@formkit/tempo";
-import { IconCalendarPlus, IconMapPin, IconPencil } from "@tabler/icons-react";
+import { IconCalendarPlus, IconMapPin } from "@tabler/icons-react";
 import Image from "next/image";
-import Link from "next/link";
+
 import { Suspense } from "react";
 
 export default async function ProfilePage({
@@ -43,36 +44,40 @@ export default async function ProfilePage({
       )}
 
       <div className="relative px-[13px] mb-4">
-        <div className="w-full absolute flex justify-end -top-14 left-0 z-10 px-[13px]">
+        <div className="w-full absolute flex justify-end -top-6 sm:-top-10 md:-top-14 left-0 z-10 px-[13px]">
           <div className="flex flex-col items-center gap-2">
             <Image
               src={user?.avatar.secureUrl}
               alt={`Foto de perfil de ${user?.name}`}
-              width={140}
-              height={140}
-              className="aspect-square object-cover object-center rounded-full"
+              width={user?.avatar.width}
+              height={user?.avatar.height}
+              className="aspect-square object-cover object-center rounded-full w-[90px] h-[90px] sm:w-[110px] sm:h-[110px] md:w-[140px] md:h-[140px]"
               title={user?.name}
               loading="lazy"
             />
 
-            <Link
-              href={isAdmin ? `/${user?.username}/edit` : ""}
-              title="Edita tu perfil."
-              className={`px-5 py-3 rounded-md bg-accent flex flex-row items-center gap-1 transition-transform hover:scale-95 ${
-                !isAdmin && "hidden"
-              }`}
-            >
-              <IconPencil /> Editar perfil
-            </Link>
+            <ProfileEditBtn
+              username={user?.username}
+              isAdmin={isAdmin}
+              className="md:flex hidden"
+            />
           </div>
         </div>
 
-        <div className="my-[10px]">
-          <h1 className="font-bold text-2xl">{user?.name}</h1>
-          <span className="text-black/70">@{user?.username}</span>
+        <div className="my-[10px] flex flex-row items-center gap-4">
+          <div>
+            <h1 className="font-bold text-2xl">{user?.name}</h1>
+            <span className="text-black/70">@{user?.username}</span>
+          </div>
+
+          <ProfileEditBtn
+            username={user?.username}
+            isAdmin={isAdmin}
+            className="flex md:hidden"
+          />
         </div>
 
-        <p className="max-w-[34ch]">{user?.bio}</p>
+        <p className="max-w-full md:max-w-[34ch]">{user?.bio}</p>
 
         <div className="my-[10px] flex flex-row gap-[10px] text-black/70 [&>#info]:flex [&>#info]:flex-row [&>#info]:items-start [&>#info]:w-fit [&>#info]:gap-1">
           <span id="info">
