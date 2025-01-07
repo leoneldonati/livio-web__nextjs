@@ -12,6 +12,7 @@ export async function encrypt(payload: JWTPayload) {
 }
 export async function decrypt(token: string) {
   try {
+    if (!token) return false;
     const { payload } = await jwtVerify(token, encodedSecret, {
       algorithms: ["HS256"],
     });

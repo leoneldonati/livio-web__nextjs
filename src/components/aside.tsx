@@ -20,7 +20,7 @@ export default async function Aside() {
 
   return (
     <aside
-      className={`sticky w-fit top-0 flex flex-col items-center backdrop-blur gap-[16px] py-[10px] px-[4px] ${
+      className={`sticky w-full md:w-fit bottom-0 md:top-0 flex flex-row md:flex-col items-center backdrop-blur gap-[16px] py-[10px] px-[4px] ${
         !session && "hidden"
       }`}
     >
@@ -31,7 +31,7 @@ export default async function Aside() {
         <li>
           <Link
             href="/search"
-            className="px-5 py-3  transition-colors border-b border-black/80 hover:bg-accent flex items-center gap-1"
+            className="px-5 py-3  transition-colors md:border-b border-black/60 hover:bg-accent flex items-center gap-1"
           >
             <IconUserSearch />
             <span className="hidden md:block">Buscar</span>
@@ -40,7 +40,7 @@ export default async function Aside() {
         <li>
           <Link
             href="/admin/notifications"
-            className="px-5 py-3  transition-colors border-b border-black/60 hover:bg-accent flex items-center gap-1"
+            className="px-5 py-3  transition-colors md:border-b border-black/60 hover:bg-accent flex items-center gap-1"
           >
             <IconBellRinging2 />
             <span className="hidden md:block">Notificaciones</span>
@@ -49,7 +49,7 @@ export default async function Aside() {
         <li>
           <Link
             href={`/${user?.username}`}
-            className="px-5 py-3  transition-colors border-b border-black/60 hover:bg-accent flex items-center gap-1"
+            className="px-5 py-3  transition-colors md:border-b border-black/60 hover:bg-accent flex items-center gap-1"
           >
             <IconUser />
             <span className="hidden md:block">Perfil</span>
@@ -58,7 +58,7 @@ export default async function Aside() {
         <li>
           <Link
             href="/feed"
-            className="px-5 py-3  transition-colors border-black/60 hover:bg-accent flex items-center gap-1"
+            className="px-5 py-3  transition-colors  hover:bg-accent flex items-center gap-1"
           >
             <IconHome2 />
             <span className="hidden md:block">Inicio</span>

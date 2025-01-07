@@ -19,7 +19,7 @@ export async function getSession() {
   const cookieName = "session";
   const session = cookieStore.get(cookieName);
 
-  if (!session) return false;
+  if (!session || !session.value) return false;
 
   const decrypted = await decrypt(session.value);
 

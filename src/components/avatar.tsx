@@ -13,7 +13,7 @@ export default async function Avatar({ id }: { id: string }) {
       width={user!.avatar.width}
       height={user!.avatar.height}
       title={user!.name}
-      className="w-[90px] h-[90px] rounded-full bg-gray-300 aspect-square object-cover object-center"
+      className="md:w-[90px] md:h-[90px] w-[50px] h-[50px] rounded-full bg-gray-300 aspect-square object-cover object-center"
     />
   );
 }

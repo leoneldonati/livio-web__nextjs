@@ -15,9 +15,10 @@ export default function CloseSessionBtn() {
     <button
       type="button"
       onClick={handleCloseSession}
-      className="px-5 py-3 rounded-md transition-colors hover:bg-red-500 hover:text-white flex flex-row items-center gap-1"
+      className="w-fit md:w-full px-5 py-3 rounded-md transition-colors bg-red-500 text-white md:text-inherit md:bg-none hover:bg-red-500 hover:text-white flex flex-row items-center gap-1"
     >
-      <IconLogout /> Cerrar sesión
+      <IconLogout />{" "}
+      <span className="hidden md:inline-block">Cerrar sesión</span>
     </button>
   );
 }
